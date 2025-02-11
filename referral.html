@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a3a69;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex; 
+            align-items: center; 
+            padding: 15px;
+            background: #125392;
+            color: #fff;
+            position: relative; 
+        }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            flex-grow: 1; 
+            text-align: center; 
+        }
+        .back-button {
+            padding: 0;
+            font-size: 16px;
+            color: #fff;
+            background-color: transparent; 
+            border: none;
+            display: flex; 
+            align-items: center; 
+        }
+        .back-button i {
+            font-size: 20px; 
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 70px;
+        }
+
+        .referral-box {
+            background-color: #125392;
+            border-radius: 12px;
+            padding: 15px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .referral-box h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .refer-title {
+          font-size: 20px;
+          font-weight: bold;
+          color: #1fb2ed;
+        }
+
+        .referral-box p {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .code-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #276797;
+            padding: 8px 5px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            width: 100%;
+            margin: auto;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        .Refer-Box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .Refer-Box h3 {
+            font-size: 15px;
+            color: #e7d050;
+            font-weight: bold;
+            margin-right: 20px;
+            text-align: left;
+        }
+
+        .Refer-Box button {
+            background-color: #0a3d62;
+            color: white;
+            border: none;
+            padding: 8px 10px;
+            border-radius: 6px;
+        }
+
+        .money-details {
+            font-size: 16px;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .money-details strong {
+            color: #e7d050;
+        }
+        
+        .Conut-Box {
+    padding: 10px; /* Adjust the padding as needed */
+    border-radius: 10px; /* Optional: Adds rounded corners */
+    height: 80px;
+}
+
+.Conut-Box h1 {
+    font-size: 22px;
+}
+
+#totalrefer-display {
+    font-size: 30px;
+    font-weight: 450;
+    color: #e7d050;
+    margin-top: -5px;
+}
+
+        .footer {
+            position: fixed;
+            background-color: #125392da;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            bottom: 0;
+            z-index: 10;
+        }
+
+        .footer-content {
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links p {
+            display: inline;
+            color: white;
+            margin: 0 5px;
+            padding: 2px 5px;
+            font-size: 14px;
+        }
+
+        .footer-links p:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .alert {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button type="button" class="back-button" onclick="goToHome()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <h1>Referral Program</h1>
+    </header>
+
+    <div class="container">
+        <div class="referral-box">
+            <h1>Referral Program</h1>
+            <p>Invite your friends and earn real money! It's simple: share your unique referral link, and when someone clicks on it and makes their first purchase, you earn a reward!</p>
+            <h3 class="refer-title">Your Referral Link:</h3>
+            <div class="code-box">
+                <div class="Refer-Box">
+                    <h3 id="Refer-Display">https://clicktaskbd.vercel.app/</h3>
+                    <button onclick="copyReferralCode()">Copy</button>
+                </div>
+            </div>
+            <p>Share your referral link with your friends, family, or colleagues. You'll earn money every time someone signs up using your link and makes their first purchase!</p>
+
+            <p>Make sure to remind them to use your link for the best experience!</p>
+            <!-- Team Build Up Section -->
+            <div class="referral-box">
+                <h2 style="color: #e7d050">Team Build Up</h2>
+                <p>By referring multiple people, you not only earn money but can build a strong team! As you grow your referral network, you can unlock higher earnings, rewards, and more opportunities.</p>
+                <p>Encourage your referrals to share their unique links, and they will become part of your team. The more active members you have in your network, the more you can earn!</p>
+                <p><strong>Why Build a Team?</strong></p>
+                <ul style="color: #fff; font-size: 16px; text-align: left; margin-top: 10px;">
+                    <li>Increased earning potential through multiple levels of referrals.</li>
+                    <li>Stronger network, leading to more success.</li>
+                    <li>Exclusive rewards and bonuses for team leaders.</li>
+                </ul>
+                <p><strong>Get started now and build your referral team to maximize your earnings!</strong></p>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            © 2025 All Rights Reserved.
+        </div>
+        <div class="footer-links">
+            <p>Privacy Policy</p> |
+            <p>Terms of Service</p> |
+            <p>Contact Us</p>
+        </div>
+    </footer>
+
+    <div class="alert" id="copyAlert">Copy Successful!</div>
+
+    <script>
+        // Retrieve and display user data from local storage
+        window.onload = function() {
+            const username = localStorage.getItem("username") || 'N/A';
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.username === username);
+
+            // Display total referrals
+            const totalReferrals = user ? user.referralCount || 0 : 0;
+            document.getElementById('totalrefer-display').textContent = totalReferrals;
+        };
+
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+
+        function copyReferralCode() {
+            const referralCode = document.getElementById('Refer-Display').textContent;
+
+            // Create a temporary input element to copy text
+            const tempInput = document.createElement('input');
+            tempInput.value = referralCode;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // Show custom alert
+            const alertBox = document.getElementById('copyAlert');
+            alertBox.style.display = 'block';
+            setTimeout(function() {
+                alertBox.style.display = 'none';
+            }, 2000); // Hide the alert after 2 seconds
+        }
+    </script>
+</body>
+</html>

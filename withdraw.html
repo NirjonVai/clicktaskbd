@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdrawal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a3a69;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            width: 100%;
+            display: flex; 
+            margin: auto;
+            align-items: center; 
+            padding: 15px;
+            background: #125392;
+            color: #fff;
+        }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            flex-grow: 1; 
+            text-align: center; 
+        }
+        .back-button {
+            padding: 0;
+            font-size: 16px;
+            color: #fff;
+            background-color: transparent; 
+            border: none;
+            display: flex; 
+            align-items: center; 
+        }
+        .back-button i {
+            font-size: 20px; 
+        }
+
+        .wallet-box {
+            width: 280px;
+            margin: auto;
+            background: #094887;
+            padding: 1px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        #username-display {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        #username-display i {
+            font-size: 50px; /* Adjust size as needed */
+            color: #5cf; /* Icon color */
+            margin-bottom: 5px; /* Space between icon and username */
+        }
+
+        #username-text {
+            color: #fff; /* Username color */
+            font-size: 16px; /* Adjust font size as needed */
+            font-weight: bold;
+        }
+
+        #wallet-earnings {
+            text-align: center;
+            color: #e7d050;
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 10px; /* Space between username and wallet earnings */
+            margin-bottom: 15px;
+        }
+
+        .earnings p {
+            font-size: 15px;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        #Withdraw-page {
+            width: 300px;
+            margin: auto;
+            background: #094887;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        input::placeholder {
+            color: #e9e3e3;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            background: #094887;
+            color: #fff;
+            border-radius: 4px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .note {
+            color: #dc858c;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .referral-box {
+            display: none;
+            width: 280px;
+            margin: 20px auto;
+            background: #125392;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .referral-box h3 {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .referral-box p {
+            color: #e7d050;
+            font-size: 14px;
+        }
+
+        .withdraw-notice {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            width: 90%;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .withdraw-notice h3 {
+            font-size: 1.4em;
+            color: #e74c;
+            margin: 10px;
+        }
+
+        .withdraw-notice .info {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
+        .withdraw-notice .limitbox {
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 5px 0;
+            font-weight: bold;
+            color: #fb4121;
+        }
+
+        .withdraw-notice .warning {
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        .withdraw-notice #next-payout-date {
+            font-weight: bold;
+            color: #0652DD;
+        }
+
+        /* New CSS for the icon */
+        .withdraw-notice i {
+            font-size: 24px; /* Adjust size as needed */
+            color: #EA2027; /* Icon color */
+            background-color: #d9bdbd; /* Background color for the icon */
+            border-radius: 50%; /* Circle shape */
+            padding: 8px; /* Add space around the icon */
+            margin-bottom: 20px; /* Space between icon and heading */
+            display: block; /* Ensures the icon is displayed above the heading */
+            text-align: center;
+            width: 45px; /* Adjust width */
+            height: 45px; /* Adjust height */
+            line-height: 24px; /* Centers the icon */
+            margin: auto;
+        }
+
+        .withdraw-notice .datebox {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        /* Custom Alert Styles */
+        .custom-alert {
+            position: fixed;
+            top: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f44336;
+            color: #fff;
+            padding: 10px;
+            width: 80%;
+            border-radius: 8px;
+            font-size: 16px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .custom-alert.success {
+            background-color: #4CAF50;
+        }
+
+        .custom-alert.error {
+            background-color: #f44336;
+        }
+        
+        .footer {
+    position: fixed;
+    background-color: #125392da;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    bottom: 0;
+    z-index: 10;
+}
+
+.footer-content {
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    margin-top: 10px;
+}
+
+.footer-links p {
+    display: inline; /* Make paragraphs display inline */
+    color: white;
+    margin: 0 5px;
+    padding: 2px 5px;
+    font-size: 14px;
+}
+
+.footer-links p:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+    color: #f0f0f0; /* Change text color on hover */
+    border-radius: 4px; /* Slight rounding of corners */
+}
+    </style>
+</head>
+<body>
+    <header>
+        <button type="button" class="back-button" onclick="goToHome()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <h1> Withdrawal Form</h1>
+    </header>
+
+    <!-- Wallet Box -->
+    <div class="wallet-box">
+        <div id="username-display" class="username">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="username-text"></span>
+        </div>
+        <div class="earnings">
+            <p>Available Balance</p>
+            <p id="wallet-earnings"></p>
+        </div>
+    </div>
+
+    <!-- Withdrawal Form -->
+    <div id="Withdraw-page">
+        <form id="withdraw-form" onsubmit="submitWithdraw(event)">
+            <label for="method">Withdrawal Method</label>
+            <select id="method" name="method" required>
+                <option value="" disabled selected>Select Payment Method</option>
+                <option value="bkash">bKash</option>
+                <option value="nagad">Nagad</option>
+                <option value="binance">Binance</option>
+            </select>
+
+            <label for="address">Withdrawal Address</label>
+            <input type="text" id="address" name="address" required placeholder="Enter your withdrawal address">
+
+            <label for="amount">Withdrawal Amount</label>
+            <input type="number" id="amount" name="amount" required placeholder="Enter withdrawal amount" min="0.01" step="any">
+            <span class="note" id="min-withdraw"></span>
+            <div id="feedback" class="success"></div>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <!-- Referral Box -->
+    <div class="referral-box">
+        <h3>Your Referral Code:</h3>
+        <p id="Refer-Display"></p>
+        <p>Total Active Referrals: <span id="totalrefer-display">0</span></p>
+    </div>
+
+    <!-- Withdrawal Notice -->
+    <div class="withdraw-notice">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <h3>Withdrawal Notice </h3>
+        <p class="info">Minimum of 10 referrals is required for the first Withdrawal Minimum.</p>
+        <p class="limitbox" id="min-withdraw-amount"></p>
+        <p class="datebox">Next Withdrawal Date: <span id="next-payout-date"></span></p>
+    </div>
+
+    <!-- Custom Alert -->
+    <div id="custom-alert" class="custom-alert"></div>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            © 2025 All Rights Reserved.
+        </div>
+        <div class="footer-links">
+            <p>Privacy Policy</p> |
+            <p>Terms of Service</p> |
+            <p>Contact Us</p>
+        </div>
+    </footer>
+
+    <script>
+        // Display Wallet Earnings and Username
+        function displayWalletEarnings() {
+            const username = localStorage.getItem("username");
+            const walletEarnings = parseFloat(localStorage.getItem(`${username}_earnings`)) || 0;
+            document.getElementById('wallet-earnings').textContent = ` ৳${walletEarnings.toFixed(0)}`;  // Round to no decimal points
+            document.getElementById('username-text').textContent = username;
+
+            // Display Referral Code
+            const user = JSON.parse(localStorage.getItem('users'))?.find(u => u.username === username);
+            const userId = user ? user.userId : 'N/A';
+            document.getElementById('Refer-Display').textContent = userId;
+
+            // Display Total Referrals
+            const totalReferrals = user ? user.referralCount || 0 : 0;
+            document.getElementById('totalrefer-display').textContent = totalReferrals;
+        }
+
+        // Custom Alert Function
+        function showCustomAlert(message, type) {
+            const alertBox = document.getElementById('custom-alert');
+            alertBox.textContent = message;
+            alertBox.classList.add(type);
+            alertBox.style.display = "block";
+
+            setTimeout(() => {
+                alertBox.style.display = "none";
+                alertBox.classList.remove(type);
+            }, 3000);  // Hide alert after 3 seconds
+        }
+
+        // Handle Withdrawal Form Submission
+        function submitWithdraw(event) {
+            event.preventDefault();
+            const method = document.getElementById('method').value;
+            const address = document.getElementById('address').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const username = localStorage.getItem("username");
+            let walletEarnings = parseFloat(localStorage.getItem(`${username}_earnings`)) || 0;
+
+            // Check if user has at least 10 active referrals
+            const user = JSON.parse(localStorage.getItem('users'))?.find(u => u.username === username);
+            const totalReferrals = user ? user.referralCount || 0 : 0;
+            if (totalReferrals < 0) {
+                showCustomAlert("You need at least 10 active referrals to make a withdrawal.", "error");
+                return;
+            }
+
+            // Ensure withdrawal amount is at least ৳2000
+            if (amount < 2000) {
+                showCustomAlert("You need a minimum of ৳2000 to make a withdrawal.", "error");
+                return;
+            }
+
+            if (amount > walletEarnings) {
+                showCustomAlert("Insufficient balance for this withdrawal.", "error");
+                return;
+            }
+
+            const date = new Date();
+            const dateTimeString = date.toISOString(); // Store full date and time
+            const status = 'Pending';
+            const withdraw = { date: dateTimeString, method, address, amount, status, username };
+
+            const withdraws = JSON.parse(localStorage.getItem('withdraws')) || [];
+            withdraws.push(withdraw);
+            localStorage.setItem('withdraws', JSON.stringify(withdraws));
+
+            walletEarnings -= amount;
+            localStorage.setItem(`${username}_earnings`, walletEarnings);
+
+            showCustomAlert("Withdrawal submitted successfully!", "success");
+
+            displayWalletEarnings();
+        }
+
+        // Get Next Payout Date (first day of the next month)
+        function getNextPayoutDate() {
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth();
+            const nextMonth = currentMonth + 1 === 12 ? 0 : currentMonth + 1;
+            const nextYear = nextMonth === 0 ? currentDate.getFullYear() + 1 : currentDate.getFullYear();
+
+            const nextPayoutDate = new Date(nextYear, nextMonth, 1);
+
+            const options = { year: 'numeric', month: 'long', day: '2-digit' };
+            const nextPayoutDateString = nextPayoutDate.toLocaleDateString('en-GB', options);
+
+            document.getElementById('next-payout-date').textContent = nextPayoutDateString;
+        }
+
+        // Check if today is the 1st or 2nd of the month to display or hide Withdraw-page
+        function checkWithdrawTime() {
+            const currentDate = new Date();
+            const currentDay = currentDate.getDate();
+            const withdrawPage = document.getElementById('Withdraw-page');
+            const withdrawNotice = document.querySelector('.withdraw-notice');
+
+            if (currentDay === 1) {
+                withdrawPage.style.display = "block";  // Show page on the 1st
+                withdrawNotice.style.display = "none"; // Hide notice
+            } else if (currentDay === 2) {
+                withdrawPage.style.display = "none";  // Hide page on the 2nd
+                withdrawNotice.style.display = "block"; // Show notice
+            } else {
+                withdrawPage.style.display = "none";  // Hide page on all other days
+                withdrawNotice.style.display = "block"; // Show notice
+            }
+        }
+
+        // Display Minimum Withdrawal Amount in the notice and the withdrawal form
+        function updateMinimumWithdrawAmount() {
+            const minWithdrawAmount = 2000;  // Set minimum withdrawal amount
+            document.getElementById('min-withdraw-amount').textContent = `Minimum Withdrawal Amount: ৳${minWithdrawAmount}`;
+            document.getElementById('min-withdraw').textContent = `Minimum Withdrawal Amount: ৳${minWithdrawAmount}`; // Show in the form
+        }
+
+        // Navigate to Home
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+
+        // Load data when the page loads
+        window.onload = function() {
+            displayWalletEarnings();
+            checkWithdrawTime();
+            getNextPayoutDate();  // Display next payout date
+            updateMinimumWithdrawAmount();  // Update minimum withdrawal amount in the notice and form
+        };
+    </script>
+</body>
+</html>

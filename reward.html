@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Rewards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #0a3a69;
+        }
+
+        header {
+            display: flex; 
+            align-items: center; 
+            padding: 12px;
+            background: #125392;
+            color: #fff;
+            position: relative; 
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            flex-grow: 1; 
+            text-align: center; 
+        }
+
+        .back-button {
+            padding: 0;
+            font-size: 16px;
+            color: #fff;
+            background-color: transparent; 
+            border: none;
+            display: flex; 
+            align-items: center; 
+        }
+
+        .back-button i {
+            font-size: 20px; 
+        }
+
+        .wallet-box {
+            width: 280px;
+            margin: auto;
+            background: #094887;
+            padding: 1px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        #username-display {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        #username-display i {
+            font-size: 50px; /* Adjust size as needed */
+            color: #5cf; /* Icon color */
+            margin-bottom: 5px; /* Space between icon and username */
+        }
+
+        #username-text {
+            color: #fff; /* Username color */
+            font-size: 16px; /* Adjust font size as needed */
+            font-weight: bold;
+        }
+
+        #wallet-earnings {
+            text-align: center;
+            color: #e7d050;
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 8px; /* Space between username and wallet earnings */
+        }
+
+        .earnings p {
+            font-size: 15px;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Wheel styles */
+        .wheel-container {
+            position: relative;
+            width: 270px;
+            height: 270px;
+            margin: 20px auto;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wheel {
+            position: absolute;
+            width: 94%;
+            height: 94%;
+            border-radius: 50%;
+            background: conic-gradient(#f00 0% 12.5%, #ff8c00 12.5% 25%, #ffff00 25% 37.5%, #008000 37.5% 50%, #0000ff 50% 62.5%, #800080 62.5% 75%, #ffc0cb 75% 87.5%, #800000 87.5% 100%);
+            transition: transform 3s ease-out;
+        }
+
+        .spin-btn-container {
+            display: flex;
+            justify-content: center; /* Center the button horizontally */
+            margin-top: 20px; /* Add some space above the button */
+        }
+
+        .spin-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .footer {
+            position: fixed;
+            background-color: #125392da;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            bottom: 0;
+            z-index: 10;
+        }
+
+        .footer-content {
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links p {
+            display: inline; /* Make paragraphs display inline */
+            color: white;
+            margin: 0 5px;
+            padding: 2px 5px;
+            font-size: 14px;
+        }
+
+        .footer-links p:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+            color: #f0f0f0; /* Change text color on hover */
+            border-radius: 4px; /* Slight rounding of corners */
+        }
+
+        /* Popup styles */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: #fff;
+            width: 90%;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .popup h2 {
+            margin-bottom: 7px;
+            color: #333;
+        }
+
+        .popup i {
+            font-size: 40px;
+            color: #ffa431; /* Green color for the win icon */
+            margin-bottom: 15px;
+        }
+
+        .popup button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Bonus display */
+        #won-amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50; /* Green color for winning */
+            margin-top: 5px;
+        }
+
+        #bonus-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333; /* Dark text for the bonus message */
+            margin-top: 1px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button type="button" class="back-button" onclick="goToHome()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <h1>Rewards</h1>
+    </header>
+
+    <!-- Wallet Box -->
+    <div class="wallet-box">
+        <div id="username-display" class="username">
+            <i class="fa-solid fa-circle-user"></i>
+            <span id="username-text"></span>
+        </div>
+        <div class="earnings">
+            <p>Available Balance</p>
+            <p id="wallet-earnings"></p>
+        </div>
+    </div>
+
+    <!-- Wheel Spin Section -->
+    <div class="wheel-container">
+        <div id="wheel" class="wheel"></div>
+    </div>
+
+    <!-- Spin Button -->
+    <div class="spin-btn-container">
+        <button class="spin-btn" id="spin-btn" onclick="spinWheel()">START SPIN</button>
+    </div>
+
+    <!-- Popup for Bonus -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <i class="fa-solid fa-trophy"></i> <!-- Win Icon -->
+            <h2 id="popup-title">Congratulations!</h2>
+            <p id="won-amount"></p>
+            <p id="bonus-text"></p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            © 2025 All Rights Reserved.
+        </div>
+        <div class="footer-links">
+            <p>Privacy Policy</p> |
+            <p>Terms of Service</p> |
+            <p>Contact Us</p>
+        </div>
+    </footer>
+
+    <script>
+        let totalEarnings = 0;
+        let username = localStorage.getItem("username");
+
+        function initializeUserData() {
+            if (username) {
+                totalEarnings = parseFloat(localStorage.getItem(`${username}_earnings`)) || 0;
+            }
+        }
+
+        function updateDisplayedEarnings() {
+            const walletEarningsElement = document.getElementById('wallet-earnings');
+            walletEarningsElement.textContent = ` ৳${Math.floor(totalEarnings)}`; // Updated to show integer without decimals
+        }
+
+        // Wheel Spin Functionality - Always spins to the right (clockwise)
+        let lastSpinDegree = 0;
+
+        function spinWheel() {
+            const wheel = document.getElementById("wheel");
+            const spinBtn = document.getElementById("spin-btn");
+
+            // Make sure the wheel spins clockwise only
+            let spinDegree = lastSpinDegree + Math.floor(Math.random() * 360) + 1800; // Starts from last spin degree and ensures clockwise movement
+            lastSpinDegree = spinDegree; // Update the last spin degree
+
+            wheel.style.transform = `rotate(${spinDegree}deg)`;
+
+            // Calculate the bonus based on the final angle
+            setTimeout(function() {
+                let bonus = getBonusWithChance();
+                totalEarnings += bonus;
+                localStorage.setItem(`${username}_earnings`, totalEarnings);
+                updateDisplayedEarnings();
+                showBonusPopup(bonus);
+            }, 3000); // Wait for 3 seconds (spin time)
+        }
+
+        function getBonusWithChance() {
+            const randomNum = Math.random();
+
+            if (randomNum < 0.5) {
+                return 0; // 90% chance for 0
+            } else if (randomNum < 0.95) {
+                return Math.floor(Math.random() * 5) + 1; // 5% chance for 1-5
+            } else if (randomNum < 0.98) {
+                return Math.floor(Math.random() * 46) + 5; // 3% chance for 5-50
+            } else {
+                return Math.floor(Math.random() * 50) + 51; // 2% chance for 51-100
+            }
+        }
+
+        function showBonusPopup(bonus) {
+            const wonAmount = document.getElementById('won-amount');
+            const bonusText = document.getElementById('bonus-text');
+            const popupTitle = document.getElementById('popup-title');
+
+            // Display the won amount and bonus message
+            wonAmount.textContent = `You won ৳${bonus}!`;
+
+            // Show the appropriate title and message based on bonus
+            if (bonus === 0) {
+                popupTitle.textContent = "Bad luck!";
+                bonusText.textContent = "Try again! You'll win soon!";
+            } else if (bonus >= 1 && bonus <= 5) {
+                popupTitle.textContent = "Congratulations!";
+                bonusText.textContent = "Nice! You're doing great!";
+            } else if (bonus >= 5 && bonus <= 50) {
+                popupTitle.textContent = "Congratulations!";
+                bonusText.textContent = "Awesome! You won a nice amount!";
+            } else {
+                popupTitle.textContent = "Congratulations!";
+                bonusText.textContent = "Incredible! Big win! Keep it up!";
+            }
+
+            document.getElementById('popup').style.display = 'flex'; // Show the popup
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none'; // Close the popup
+        }
+
+        window.onload = function() {
+            initializeUserData();
+            updateDisplayedEarnings();
+
+            if (username) {
+                document.getElementById("username-display").textContent = ` ${username}`;
+            }
+
+            resetTasksAtMidnight();
+        };
+
+        function goToHome() {
+            window.location.href = "index.html"; // Redirect to home page
+        }
+    </script>
+</body>
+</html>

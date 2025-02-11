@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Log</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #2c3e50;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #364b61;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #fff;
+        }
+        .activity-item {
+            border: 1px solid #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #364b61;
+            color: #fff;
+        }
+        .status {
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .status.complete { background-color: #007bff; color: white; }
+        .status.pending { background-color: gold; color: #000;}
+        .status.cancelled { background-color: red; color: white; }
+        button {
+            padding: 4px 6px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .action-btn { background-color: #f4cf05; }
+        .complete-btn { background-color: #007bff; color: #fff; }
+        .cancel-btn { background-color: #dc3545; color: #fff; }
+        .no-activity { text-align: center; color: #fff; padding: 20px; font-size: 1.2em;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Activity Log</h1>
+        <div id="activity-table-body"></div>
+        <div class="no-activity" id="no-activity-message" style="display:none;">No activity logs found.</div>
+    </div>
+
+    <script>
+        function loadActivities() {
+            const activities = JSON.parse(localStorage.getItem('withdraws')) || [];
+            const activityTableBody = document.getElementById('activity-table-body');
+            const noActivityMessage = document.getElementById('no-activity-message');
+
+            activityTableBody.innerHTML = '';
+
+            if (activities.length === 0) {
+                noActivityMessage.style.display = 'block';
+            } else {
+                noActivityMessage.style.display = 'none';
+
+                // Reverse the activities array
+                activities.reverse().forEach((activity, index) => {
+                    const activityItem = document.createElement('div');
+                    activityItem.className = 'activity-item';
+                    const dateInBDT = new Date(activity.date).toLocaleString('en-BD', { timeZone: 'Asia/Dhaka' });
+
+                    // Use index from the original array to access correct activity
+                    activityItem.innerHTML = `
+                        <h4>Username: <span>${activity.username}</span></h4>
+                        <h4>Date: <span>${dateInBDT}</span></h4>
+                        <h4>Method: <span>${activity.method}</span></h4>
+                        <h4>Address: <span>${activity.address}</span> <button class="action-btn" onclick="copyToClipboard('${activity.address}')">Copy</button></h4>
+                        <h4>Amount: <span>$${activity.amount.toFixed(2)}</span></h4>
+                        <h4>Status: <span class="status ${activity.status.toLowerCase()}">${activity.status}</span></h4>
+                        <div>
+                            <button class="complete-btn" onclick="markComplete(${activities.length - 1 - index})" ${activity.status === 'Complete' || activity.status === 'Cancelled' ? 'style="display:none;"' : ''}>Complete</button>
+                            <button class="cancel-btn" onclick="cancelActivity(${activities.length - 1 - index})" ${activity.status === 'Complete' || activity.status === 'Cancelled' ? 'style="display:none;"' : ''}>Cancel</button>
+                        </div>
+                    `;
+                    activityTableBody.appendChild(activityItem);
+                });
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Address copied to clipboard!');
+            }).catch(err => {
+                console.error('Error copying text: ', err);
+            });
+        }
+
+        function markComplete(index) {
+            const activities = JSON.parse(localStorage.getItem('withdraws')) || [];
+            activities[index].status = "Complete";
+            localStorage.setItem('withdraws', JSON.stringify(activities));
+            loadActivities();
+        }
+
+        function cancelActivity(index) {
+            const activities = JSON.parse(localStorage.getItem('withdraws')) || [];
+            const amount = activities[index].amount; // Get the amount to return
+            const username = activities[index].username; // Get the username for wallet update
+
+            // Update the status of the activity
+            activities[index].status = "Cancelled";
+            localStorage.setItem('withdraws', JSON.stringify(activities));
+
+            // Update the wallet earnings
+            let walletEarnings = parseFloat(localStorage.getItem(`${username}_earnings`)) || 0;
+            walletEarnings += amount; // Return the withdrawn amount
+            localStorage.setItem(`${username}_earnings`, walletEarnings);
+
+            loadActivities(); // Refresh the activity log
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadActivities();
+        });
+    </script>
+</body>
+</html>

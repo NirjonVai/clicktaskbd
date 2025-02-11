@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a3a69;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex; 
+            align-items: center; 
+            padding: 15px;
+            background: #125392;
+            color: #fff;
+            position: relative; 
+        }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            flex-grow: 1; 
+            text-align: center; 
+        }
+        .back-button {
+            padding: 0;
+            font-size: 16px;
+            color: #fff;
+            background-color: transparent; 
+            border: none;
+            display: flex; 
+            align-items: center; 
+        }
+        .back-button i {
+            font-size: 20px; 
+        }
+        h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .main-container {
+            width: 80%;
+            background: #125392;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 70px auto;
+            padding: 20px;
+            border-radius: 7px;
+            text-align: center;
+        }
+        .user-info {
+            padding: 10px;
+            background: #276797e2;
+            color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            position: relative; 
+        }
+        .toggle-password {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            position: absolute; 
+            right: 10px; 
+            top: 50%; 
+            transform: translateY(-50%);
+        }
+        
+        .footer {
+    position: fixed;
+    background-color: #125392da;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    bottom: 0;
+    z-index: 10;
+}
+
+.footer-content {
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    margin-top: 10px;
+}
+
+.footer-links p {
+    display: inline; /* Make paragraphs display inline */
+    color: white;
+    margin: 0 5px;
+    padding: 2px 5px;
+    font-size: 14px;
+}
+
+.footer-links p:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+    color: #f0f0f0; /* Change text color on hover */
+    border-radius: 4px; /* Slight rounding of corners */
+}
+    </style>
+</head>
+<body>
+    <header>
+        <button type="button" class="back-button" onclick="goToHome()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <h1>My Account Details</h1>
+    </header>
+    <div class="main-container">
+        <h3>User Join Date</h3>
+        <div class="user-info" id="joindate"></div>
+      
+        <h3>Total Earnings</h3>
+        <div class="user-info" id="total-earnings"></div>
+
+        <h3>Username</h3>
+        <div class="user-info" id="username"></div>
+
+        <h3>Phone Number</h3>
+        <div class="user-info" id="phone-number"></div>
+
+        <h3>User ID</h3>
+        <div class="user-info" id="user-id"></div>
+
+        <h3>Password</h3>
+        <div class="user-info" id="password-container">
+            <span id="password-dots">******</span>
+            <span id="password" style="display: none;">N/A</span>
+            <button type="button" class="toggle-password" onclick="togglePassword()">Show</button>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            © 2025 All Rights Reserved.
+        </div>
+        <div class="footer-links">
+            <p>Privacy Policy</p> |
+            <p>Terms of Service</p> |
+            <p>Contact Us</p>
+        </div>
+    </footer>
+
+    <script>
+        // Retrieve and display user data from local storage
+        window.onload = function() {
+            const username = localStorage.getItem("username") || 'N/A';
+            const totalEarnings = parseFloat(localStorage.getItem(`${username}_earnings`) || '0.00');
+            const joinDate = localStorage.getItem(`${username}_joinDate`) || 'N/A';
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.username === username);
+
+            // Update the display for total earnings, username, phone number, password, and user ID
+            // Remove the decimal part if totalEarnings is a whole number
+            const earningsText = totalEarnings % 1 === 0 ? `৳${totalEarnings.toFixed(0)}` : `৳${totalEarnings.toFixed(2)}`;
+            document.getElementById('total-earnings').textContent = earningsText;
+            document.getElementById('username').textContent = username;
+            document.getElementById('phone-number').textContent = user ? user.phone : 'N/A';
+            document.getElementById('joindate').textContent = joinDate; // Display join date
+            document.getElementById('user-id').textContent = user ? user.userId : 'N/A'; // Display user ID
+
+            // Generate asterisks based on the actual password length
+            const password = user ? user.password : 'N/A';
+            document.getElementById('password').textContent = password; // Store actual password
+            document.getElementById('password-dots').textContent = '*'.repeat(password.length); // Display asterisks
+        };
+
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const passwordDots = document.getElementById('password-dots');
+            const toggleButton = document.querySelector('.toggle-password');
+
+            if (passwordField.style.display === "none") {
+                passwordField.style.display = "inline"; // Show actual password
+                passwordDots.style.display = "none"; // Hide asterisks
+                toggleButton.textContent = "Hide"; // Change button text
+            } else {
+                passwordField.style.display = "none"; // Hide actual password
+                passwordDots.style.display = "inline"; // Show asterisks
+                toggleButton.textContent = "Show"; // Change button text
+            }
+        }
+    </script>
+</body>
+</html>
