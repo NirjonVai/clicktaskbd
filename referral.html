@@ -3,149 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referral</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Referral</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background-color: #0a3a69;
             margin: 0;
             padding: 0;
+            font-family: Arial, sans-serif;
+            background: #0a3a69;
         }
+
         header {
-            display: flex; 
-            align-items: center; 
-            padding: 15px;
+            display: flex;
+            align-items: center;
+            padding: 12px;
             background: #125392;
             color: #fff;
-            position: relative; 
+            position: relative;
         }
+
         h1 {
             margin: 0;
             font-size: 24px;
-            flex-grow: 1; 
-            text-align: center; 
+            flex-grow: 1;
+            text-align: center;
         }
+
         .back-button {
             padding: 0;
             font-size: 16px;
             color: #fff;
-            background-color: transparent; 
+            background-color: transparent;
             border: none;
-            display: flex; 
-            align-items: center; 
-        }
-        .back-button i {
-            font-size: 20px; 
-        }
-
-        .container {
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 10px;
-            margin-bottom: 70px;
         }
 
-        .referral-box {
-            background-color: #125392;
-            border-radius: 12px;
-            padding: 15px;
+        .back-button i {
+            font-size: 20px;
+        }
+
+        /* Alert Box */
+        .alert {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 450px;
+            background-color: #ff4747;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 100;
+        }
+
+        .alert-success {
+            background-color: #4CAF50;
+        }
+
+        .wallet-box {
+            display: none;
+            width: 280px;
+            margin: auto;
+            background: #094887;
+            padding: 1px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        #username-display {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        #username-display i {
+            font-size: 50px;
+            color: #5cf;
+            margin-bottom: 5px;
+        }
+
+        #username-text {
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #wallet-earnings {
+            text-align: center;
+            color: #e7d050;
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .earnings p {
+            font-size: 15px;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .bonus-container {
+            width: 90%;
+            margin: auto;
+            margin-top: 30px;
+            padding: 10px;
+            border: 2px solid #fff;
+            border-radius: 10px;
             text-align: center;
         }
 
-        .referral-box h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 10px;
+        .bonus-container p {
             color: #fff;
-        }
-        
-        .refer-title {
-          font-size: 20px;
-          font-weight: bold;
-          color: #1fb2ed;
-        }
-
-        .referral-box p {
             font-size: 16px;
-            color: #fff;
-            margin-bottom: 10px;
-            font-weight: 400;
-        }
-
-        .code-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #276797;
-            padding: 8px 5px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            width: 100%;
-            margin: auto;
-            margin-top: 5px;
-            margin-bottom: 20px;
-        }
-
-        .Refer-Box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .Refer-Box h3 {
-            font-size: 16px;
-            color: #e7d050;
+            margin-bottom: 5px;
             font-weight: bold;
-            margin-right: 20px;
-            text-align: left;
         }
 
-        .Refer-Box button {
-            background-color: #0a3d62;
+        .bonus-container input {
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #cdcc8f;
+            border-radius: 5px;
+            width: 100%;
+            background: #f0f0f0;
+            color: #333;
+            margin-bottom: 15px;
+            outline: none;
+            text-align: center;
+        }
+
+        .bonus-container button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 8px 10px;
-            border-radius: 6px;
+            border-radius: 8px;
+            margin: auto;
+            display: block;
+            width: 50%;
+            font-weight: bold;
         }
-
-        .money-details {
-            font-size: 16px;
-            margin-top: 20px;
-            color: #333;
-        }
-
-        .money-details strong {
-            color: #e7d050;
-        }
-        
-        .Conut-Box {
-    padding: 10px; /* Adjust the padding as needed */
-    border-radius: 10px; /* Optional: Adds rounded corners */
-    height: 80px;
-}
-
-.Conut-Box h1 {
-    font-size: 22px;
-}
-
-#totalrefer-display {
-    font-size: 30px;
-    font-weight: 450;
-    color: #e7d050;
-    margin-top: -5px;
-}
 
         .footer {
             position: fixed;
@@ -154,7 +165,7 @@
             text-align: center;
             padding: 8px;
             bottom: 0;
-            z-index: 10;
+            width: 100%;
         }
 
         .footer-content {
@@ -179,106 +190,352 @@
             border-radius: 4px;
         }
 
-        .alert {
+        .popup {
             display: none;
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #28a745;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: #fff;
+            width: 90%;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .popup h2 {
+            margin-bottom: 7px;
+            color: #4e8dff;
+        }
+
+        .popup img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .popup button {
+            background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
-            border-radius: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
             font-size: 16px;
+        }
+
+        #bonus-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 1px;
+            margin-bottom: 10px;
+        }
+
+        .history-section {
+            width: 90%;
+            margin: auto;
+            background-color: #125392;
+            border-radius: 8px;
+        }
+
+        .history-container {
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 100px;
+            padding: 15px;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+
+        .history-section h4 {
+            font-size: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .history-list {
+        }
+
+        .history-item {
+            background-color: #0a3d62;
+            padding: 15px;
+            border-radius: 8px;
+            color: #ced6e0;
+            margin-bottom: 10px;
+        }
+
+        .history-item p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .referral-box {
+            width: 100%;
+            margin: auto;
+            margin-top: 20px;
+            padding: 5px;
+        }
+
+        .referral-box p {
+            text-align: center;
+            color: #9AECDB;
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #fff;
+        }
+
+        .referral-box span {
+            text-align: center;
+            color: #e7d050;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .Refer-section {
+          
+        }
+        
+        .Refer-section h4 {
+          text-align: center;
+          color: #fff;
+          margin-top: 15px;
+        }
+        
+         .code-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #276797;
+            padding: 8px 5px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            width: 90%;
+            margin: auto;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        .Refer-Box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .Refer-Box h3 {
+            font-size: 15px;
+            color: #e7d050;
+            font-weight: bold;
+            margin-right: 20px;
+            text-align: left;
+        }
+
+        .Refer-Box button {
+            background-color: #0a3d62;
+            color: white;
+            border: none;
+            padding: 8px 10px;
+            border-radius: 6px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <button type="button" class="back-button" onclick="goToHome()">
-            <i class="fas fa-arrow-left"></i>
-        </button>
-        <h1>Referral Program</h1>
-    </header>
 
-    <div class="container">
-        <div class="referral-box">
-            <h1>Referral Program</h1>
-            <p>Invite your friends and earn real money! It's simple: share your unique referral link, and when someone clicks on it and makes their first purchase, you earn a reward!</p>
-            <h3 class="refer-title">Your Referral Link:</h3>
-            <div class="code-box">
+<header>
+    <button type="button" class="back-button" onclick="goToHome()">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+    <h1>Referral</h1>
+</header>
+
+<!-- Custom Alert -->
+<div id="custom-alert" class="alert"></div>
+
+<!-- Wallet Box -->
+<div class="wallet-box">
+    <div id="username-display" class="username">
+        <i class="fa-solid fa-circle-user"></i>
+        <span id="username-text"></span>
+    </div>
+    <div class="earnings">
+        <p>Available Balance</p>
+        <p id="wallet-earnings"></p>
+    </div>
+</div>
+
+<!-- Bonus Code Input -->
+<div class="bonus-container">
+    <p>Join DownLine Team</p>
+    <input type="text" id="bonus-code" placeholder="Type Downline Code">
+    <button onclick="applyBonusCode()">Submit</button>
+</div>
+       <div class="Refer-section">
+         <h4>Your Referral Link</h4>
+         <div class="code-box">
                 <div class="Refer-Box">
                     <h3 id="Refer-Display">https://clicktaskbd.vercel.app/</h3>
                     <button onclick="copyReferralCode()">Copy</button>
                 </div>
             </div>
-            <p>Share your referral link with your friends, family, or colleagues. You'll earn money every time someone signs up using your link and makes their first purchase!</p>
+       </div>
 
-            <p>Make sure to remind them to use your link for the best experience!</p>
-            <!-- Team Build Up Section -->
-            <div class="referral-box">
-                <h2 style="color: #e7d050">Team Build Up</h2>
-                <p>By referring multiple people, you not only earn money but can build a strong team! As you grow your referral network, you can unlock higher earnings, rewards, and more opportunities.</p>
-                <p>Encourage your referrals to share their unique links, and they will become part of your team. The more active members you have in your network, the more you can earn!</p>
-                <p><strong>Why Build a Team?</strong></p>
-                <ul style="color: #fff; font-size: 16px; text-align: left; margin-top: 10px;">
-                    <li>Increased earning potential through multiple levels of referrals.</li>
-                    <li>Stronger network, leading to more success.</li>
-                    <li>Exclusive rewards and bonuses for team leaders.</li>
-                </ul>
-                <p><strong>Get started now and build your referral team to maximize your earnings!</strong></p>
-            </div>
-
+<!-- Referral History Section -->
+<div class="history-section">
+    <div class="referral-box">
+        <p>Total Active Refer: <span id="totalrefer-display">0</span></p>
+    </div>
+    <h4>Referral History</h4>
+    <div class="history-container">
+        <div class="history" id="history-list">
+            <!-- History items will be added dynamically here -->
         </div>
     </div>
+</div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            © 2025 All Rights Reserved.
-        </div>
-        <div class="footer-links">
-            <p>Privacy Policy</p> |
-            <p>Terms of Service</p> |
-            <p>Contact Us</p>
-        </div>
-    </footer>
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <img src="winner.gif" alt="image">
+        <h2 id="popup-title">Congratulations!</h2>
+        <p id="bonus-text"></p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</div>
 
-    <div class="alert" id="copyAlert">Copy Successful!</div>
+<footer class="footer">
+    <div class="footer-content">
+        © 2025 All Rights Reserved.
+    </div>
+    <div class="footer-links">
+        <p>Privacy Policy</p> |
+        <p>Terms of Service</p> |
+        <p>Contact Us</p>
+    </div>
+</footer>
 
-    <script>
-        // Retrieve and display user data from local storage
-        window.onload = function() {
-            const username = localStorage.getItem("username") || 'N/A';
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(u => u.username === username);
+<script>
+    let totalEarnings = 0;
+    let username = localStorage.getItem("username");
+    let appliedCodes = JSON.parse(localStorage.getItem("appliedCodes")) || [];
 
-            // Display total referrals
-            const totalReferrals = user ? user.referralCount || 0 : 0;
-            document.getElementById('totalrefer-display').textContent = totalReferrals;
-        };
+    function initializeUserData() {
+        if (username) {
+            totalEarnings = parseFloat(localStorage.getItem(`${username}_earnings`)) || 0;
+        }
+    }
 
-        function goToHome() {
-            window.location.href = 'index.html';
+    function updateDisplayedEarnings() {
+        const walletEarningsElement = document.getElementById('wallet-earnings');
+        walletEarningsElement.textContent = ` ৳${Math.floor(totalEarnings)}`;
+    }
+
+    function showCustomAlert(message, isSuccess = false) {
+        const alertElement = document.getElementById('custom-alert');
+        alertElement.textContent = message;
+        alertElement.style.display = 'block';
+        alertElement.classList.toggle('alert-success', isSuccess);
+        setTimeout(() => {
+            alertElement.style.display = 'none';
+        }, 3000);
+    }
+
+    function applyBonusCode() {
+        const bonusCode = document.getElementById("bonus-code").value.trim();
+
+        if (appliedCodes.includes(bonusCode)) {
+            showCustomAlert("This code has already been used.", false);
+            return;
         }
 
-        function copyReferralCode() {
-            const referralCode = document.getElementById('Refer-Display').textContent;
+        if (bonusCode === "945207") {
+            totalEarnings += 20;
+            localStorage.setItem(`${username}_earnings`, totalEarnings);
+            appliedCodes.push(bonusCode);
+            localStorage.setItem("appliedCodes", JSON.stringify(appliedCodes));
+            updateDisplayedEarnings();
+            
+            document.getElementById('bonus-text').textContent = `You have earned a referral bonus of ৳20. Enjoy your reward!`;
+            document.getElementById('popup').style.display = 'flex';
 
-            // Create a temporary input element to copy text
-            const tempInput = document.createElement('input');
-            tempInput.value = referralCode;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
+            // Save history entry
+            const dateTime = new Date().toLocaleString();
+            const historyEntry = {
+                code: bonusCode,
+                amount: "৳20",
+                dateTime: dateTime
+            };
+            const historyList = JSON.parse(localStorage.getItem(`${username}_historyList`)) || [];
+            historyList.unshift(historyEntry); // Add new history at the beginning
+            localStorage.setItem(`${username}_historyList`, JSON.stringify(historyList));
 
-            // Show custom alert
-            const alertBox = document.getElementById('copyAlert');
-            alertBox.style.display = 'block';
-            setTimeout(function() {
-                alertBox.style.display = 'none';
-            }, 2000); // Hide the alert after 2 seconds
+            displayReferralHistory();
+            updateActiveReferrals();  // Update the active referrals after applying the code
+        } else {
+            showCustomAlert("Invalid code. Please try again.", false);
         }
-    </script>
+
+        document.getElementById("bonus-code").value = "";
+    }
+
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    function displayReferralHistory() {
+        const historyList = JSON.parse(localStorage.getItem(`${username}_historyList`)) || [];
+        const historyContainer = document.getElementById('history-list');
+        historyContainer.innerHTML = ''; // Clear existing content
+
+        historyList.forEach(entry => {
+            const historyItem = document.createElement('div');
+            historyItem.classList.add('history-item');
+            historyItem.innerHTML = `
+                <p><strong>Referral Id:</strong> ${entry.code}</p>
+                <p><strong>Referral Bonus:</strong> ${entry.amount}</p>
+                <p><strong>Date/Time:</strong> ${entry.dateTime}</p>
+            `;
+            historyContainer.appendChild(historyItem);
+        });
+    }
+
+    function updateActiveReferrals() {
+        const historyList = JSON.parse(localStorage.getItem(`${username}_historyList`)) || [];
+        const activeReferrals = historyList.filter(entry => entry.amount === "৳20").length;
+        document.getElementById('totalrefer-display').textContent = activeReferrals;
+    }
+
+    window.onload = function() {
+        initializeUserData();
+        updateDisplayedEarnings();
+        displayReferralHistory();  // Display history on page load
+        updateActiveReferrals();  // Update active referrals on page load
+
+        if (username) {
+            document.getElementById("username-display").textContent = ` ${username}`;
+        }
+    };
+
+    function goToHome() {
+        window.location.href = "index.html";
+    }
+
+    function copyReferralCode() {
+        const referralText = document.getElementById("Refer-Display").textContent;
+        navigator.clipboard.writeText(referralText).then(() => {
+            showCustomAlert("Referral link copied to clipboard!", true);
+        }).catch(() => {
+            showCustomAlert("Failed to copy referral link.", false);
+        });
+    }
+</script>
 </body>
 </html>
