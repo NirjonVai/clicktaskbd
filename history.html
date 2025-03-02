@@ -223,10 +223,10 @@
                         const timeDifference = currentTime - withdrawTime;
 
                         if (timeDifference >= 72 * 60 * 60 * 1000) { // 72 hours = 72 * 60 * 60 * 1000 ms
-                            withdraw.status = "Complete";  // Change status to Complete
+                            withdraw.status = "Rejected";  // Change status to Complete
                             withdraws.forEach(item => {
                                 if (item.username === username && item.date === withdraw.date) {
-                                    item.status = "Complete"; // Update the status in the localStorage
+                                    item.status = "Rejected"; // Update the status in the localStorage
                                 }
                             });
                             localStorage.setItem('withdraws', JSON.stringify(withdraws)); // Save updated withdraws
